@@ -1,31 +1,28 @@
-# 👇🏻 Write your code here 👇🏻:
+import requests
 
-def get_yearly_revenue(monthly_revenue):
-    return monthly_revenue*12
-def get_yearly_expenses(monthly_expenses):
-    return monthly_expenses*12
-def get_tax_amount(profit):
-    if profit>100000:
-        return profit*0.25
-    else:
-        return profit*0.15
-def apply_tax_credits(tax_amount, tax_credits):
-    return tax_amount*tax_credits
+movie_ids = [
+    238,
+    680,
+    550,
+    185,
+    641,
+    515042,
+    152532,
+    120467,
+    872585,
+    906126,
+    840430
+]
 
+datas = []
 
-# ❌ Don't touch anthing below this line ❌
-
-monthly_revenue = 5500000
-monthly_expenses = 2700000
-tax_credits = 0.01
-
-yearly_revenue = get_yearly_revenue(monthly_revenue)
-yearly_expenses = get_yearly_expenses(monthly_expenses)
-
-profit = yearly_revenue - yearly_expenses
-
-tax_amount = get_tax_amount(profit)
-
-final_tax_amount = tax_amount - apply_tax_credits(tax_amount, tax_credits)
-
-print(f"Your tax bill is: ${final_tax_amount}")
+for movie_id in movie_ids:
+    URL = f"https://nomad-movies.nomadcoders.workers.dev/movies/{movie_id}"
+    response = requests.get(URL)
+    data = response.json()
+    id_data = {}
+    id_data["title"] = data["title"]
+    id_data["overview"] = data["overview"]
+    id_data["vote_average"] = data["vote_average"]
+    datas.append(id_data)
+print(datas)
